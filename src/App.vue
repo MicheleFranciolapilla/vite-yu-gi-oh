@@ -1,11 +1,13 @@
 <script>
 // Importazione dello store (state management)
+  import Comp_get_cards from "./components/Comp_get_cards.vue";
   import { store } from "./store"
   export default
   {
     name        : "App",
     components  : 
     {
+      Comp_get_cards
     }
   }
 </script>
