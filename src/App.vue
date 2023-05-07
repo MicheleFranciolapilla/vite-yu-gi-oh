@@ -18,6 +18,7 @@
       <img id="logo" src="https://png.pngitem.com/pimgs/s/172-1722643_yugioh-logo-png-yu-gi-oh-logo-transparent.png" alt="logo">
       <h1>Yu-Gi-Oh Api</h1>
     </header>
+    <Comp_get_cards/>
   </div>
 </template>
 
