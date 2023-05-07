@@ -1,24 +1,34 @@
 <script>
 // Importazione dello store (state management)
   import Comp_get_cards from "./components/Comp_get_cards.vue";
+  import Comp_show_cards from "./components/Comp_show_cards.vue";
   import { store } from "./store"
   export default
   {
     name        : "App",
     components  : 
     {
-      Comp_get_cards
+      Comp_get_cards,
+      Comp_show_cards
     }
   }
 </script>
 
 <template>
-  <div id="app_base">
-    <header class="fixed-top">
+  <div id="app_base" class="vh-100">
+    <header>
       <img id="logo" src="https://png.pngitem.com/pimgs/s/172-1722643_yugioh-logo-png-yu-gi-oh-logo-transparent.png" alt="logo">
       <h1>Yu-Gi-Oh Api</h1>
     </header>
-    <Comp_get_cards/>
+    <nav>
+    </nav>
+    <main>
+      <Comp_get_cards/>
+      <Comp_show_cards/>
+    </main>
+    <footer class="fixed-bottom">
+
+    </footer>
   </div>
 </template>
 
@@ -29,7 +39,6 @@
     #app_base
     {
       background-color: $background_color;
-      min-height: 100vh;
       header
       {
         height: $header_height;
@@ -47,6 +56,20 @@
           color: $title_color;
         } 
       }
+      nav
+      {
+        height: $nav_height;
+      } 
+      main
+      {
+        height: calc(100% - ($header_height + $nav_height + $footer_height));
+        padding: 3vh 0;
+      } 
+      footer
+      {
+        height: $footer_height;
+        background-color: $footer_color;
+      } 
     }
 
 </style>

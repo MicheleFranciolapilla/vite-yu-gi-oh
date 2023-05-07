@@ -10,14 +10,15 @@
                 // URL della API (effettivo)
                 API_URL_actual  : "",
                 // Array contenente le chiavi della query string
-                URL_keys        : ["num=","offset="] 
+                URL_keys        : ["num=","offset="],
+                store
             }
         },
 
         created()
         {
             // Invocazione del metodo che si occupa della richiesta alla API
-            this.get_cards();
+            this.get_cards(0);
         },
 
         methods :
@@ -38,14 +39,18 @@
             },
 
             // Metodo incaricato delle richieste alla API
-            get_cards()
+            async get_cards(code)
             {
-                this.set_api_url(0);
-                axios.get(this.API_URL_actual).then( res => 
+                this.set_api_url(code);
+                await axios.get(this.API_URL_actual).then( res => 
                 {
-                    console.log(res);
+                    this.store.cards = res.data.data;
+                    console.log("res ",res.data.data);
+                    console.log("store ",store.cards);
                 });
             }
         }
     }
 </script>
+
+<template></template>
