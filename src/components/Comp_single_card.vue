@@ -42,7 +42,7 @@
             flex-direction: column;
             justify-content: space-between;
             width: calc(100%);
-            aspect-ratio: calc(1);
+            aspect-ratio: 2;
             background-color: $background_color;
             border: 2px solid lightgray;
             border-radius: 5px;

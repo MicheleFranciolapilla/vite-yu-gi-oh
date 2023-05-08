@@ -1,6 +1,7 @@
 <script>
 // Importazione dello store (state management)
   import Comp_get_cards from "./components/Comp_get_cards.vue";
+  import Comp_nav_menu from "./components/Comp_nav_menu.vue";
   import Comp_show_cards from "./components/Comp_show_cards.vue";
   import { store } from "./store"
   export default
@@ -9,6 +10,7 @@
     components  : 
     {
       Comp_get_cards,
+      Comp_nav_menu,
       Comp_show_cards
     }
   }
@@ -21,6 +23,7 @@
       <h1>Yu-Gi-Oh Api</h1>
     </header>
     <nav>
+      <Comp_nav_menu/>
     </nav>
     <main>
       <Comp_get_cards/>
@@ -59,6 +62,7 @@
       nav
       {
         height: $nav_height;
+        padding-top: 10px;
       } 
       main
       {
