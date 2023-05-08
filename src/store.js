@@ -9,7 +9,7 @@ export const store = reactive(
         // Indice della card da cui partire per la richiesta all'API
         cards_base          : 0, 
         // Numero di cards da richiedere all'API
-        cards_to_get        : 20, 
+        cards_to_get        : 5, 
         // Array con le cards ricevute dalla API
         cards               : [],  
         // URL della API (base)

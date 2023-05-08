@@ -26,9 +26,7 @@
             <span>Found {{ store.cards.length }} cards</span>
         </div>
         <div id="card_set">
-            <div class="card"
-            v-for="(item, index) in store.cards" :key="index"
-            v-bind:style="card_width">
+            <div v-for="(item, index) in store.cards" :key="index" v-bind:style="card_width">
                 <Comp_single_card :single_card = "item"/>
             </div>
         </div>
@@ -42,7 +40,8 @@
     #show_cards
     {
         background-color: $cards_back_color;
-        height: 100%;
+        border: 3px solid black;
+        height: calc(100%);
         padding: calc($card_set_gap * 2);
         #card_set_header
         {
@@ -50,6 +49,7 @@
             background-color: $card_set_header_c;
             display: flex;
             align-items: center;
+            margin-bottom: 3px;
             span
             {
                 color: $card_set_header_t;
@@ -61,7 +61,12 @@
             display: flex;
             flex-wrap: wrap;
             gap: $card_set_gap;
-            height: calc(100% - $card_set_header_h);
+            height: calc(100% - $card_set_header_h - 3px);
+            overflow-y: auto;
+            div
+            {
+                overflow: hidden;
+            } 
         } 
     }
 </style>

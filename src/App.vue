@@ -15,7 +15,7 @@
 </script>
 
 <template>
-  <div id="app_base" class="vh-100">
+  <div id="app_base" class="vh-100 position-relative">
     <header>
       <img id="logo" src="https://png.pngitem.com/pimgs/s/172-1722643_yugioh-logo-png-yu-gi-oh-logo-transparent.png" alt="logo">
       <h1>Yu-Gi-Oh Api</h1>
@@ -62,7 +62,7 @@
       } 
       main
       {
-        max-height: calc(100% - ($header_height + $nav_height + $footer_height));
+        height: calc(100% - ($header_height + $nav_height + $footer_height));
         padding: 3vh 0;
       } 
       footer
