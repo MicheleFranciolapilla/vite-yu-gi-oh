@@ -11,22 +11,48 @@
         data()
         {
             return {
-                box_width   : `width : calc(100% * ${store.card_set_width})`,
-                card_width  : `flex-basis: calc((100% - (${store.card_gap * (store.cards_per_row - 1)}vw)) / ${store.cards_per_row})`,
+                box_width   : "",
+                card_width  : "",
                 store
             }
+        },
+        computed:
+        {
+
+        //     change_box_width()
+        //     {
+        //         this.box_width   = `width : calc(100% * ${store.card_set_w_array[store.card_set_width]})`;
+        //         return this.box_width;
+        //     },
+
+        //     change_card_width()
+        //     {
+        //         this.card_width   = `flex-basis: calc((100% - (${store.card_gap * (store.cards_per_row - 1)}vw)) / ${store.cards_per_row})`;
+        //         return this.card_width;
+        //     }
+        // }
+            change_box_width()
+            {
+                return `width : calc(100% * ${store.card_set_w_array[store.card_set_width]})`;
+            },
+
+            change_card_width()
+            {
+                return `flex-basis: calc((100% - (${store.card_gap * (store.cards_per_row - 1)}vw)) / ${store.cards_per_row})`;
+            }
         }
+
     }
 </script>
 
 <template>
     <div id="show_cards" class="mx-auto"
-        v-bind:style="box_width">
+        v-bind:style="change_box_width">
         <div id="card_set_header">
-            <span>Found {{ store.cards.length }} cards</span>
+            <span>Cards trovate: {{ store.cards.length }} cards</span>
         </div>
         <div id="card_set">
-            <div v-for="(item, index) in store.cards" :key="index" v-bind:style="card_width">
+            <div v-for="(item, index) in store.cards" :key="index" v-bind:style="change_card_width">
                 <Comp_single_card :single_card = "item"/>
             </div>
         </div>
