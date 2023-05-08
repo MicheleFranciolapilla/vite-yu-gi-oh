@@ -11,11 +11,72 @@
         },
         methods:
         {
+            chek_limit(limit)
+            {
+                let limit_bool = false;
+                switch (limit)
+                {
+                    case 0:
+                        if (this.store.card_set_width = 0)
+                        limit_bool = true;
+                        break;
+                    case 1:
+                        if (this.store.card_set_width = this.store.card_set_w_array.length - 1)
+                        limit_bool = true;
+                        break;
+                    case 2:
+                        if (this.store.cards_per_row = 1)
+                        limit_bool = true;
+                        break;
+                    case 3:
+                        if (this.store.cards_per_row = this.store.cards.length)
+                        limit_bool = true;
+                        break;
+                }
+                return limit_bool;
+            },
+
+            check_limit(btn,direction)
+            {
+                switch (btn)
+                {
+                    case "width":
+                        // Toggle sul pulsante "thinner"
+                        if (((direction == "-") && (this.store.card_set_width == 0)) || ((direction == "+") && (this.store.card_set_width == 1)))
+                        {
+                            let btn_id = document.querySelector("#thinner");
+                            btn_id.classList.toggle("on_limit");
+                        }
+                        // Toggle sul pulsante "thicker"
+                        else if (((direction == "-") && (this.store.card_set_width == this.store.card_set_w_array.length - 2)) || ((direction == "+") && (this.store.card_set_width == this.store.card_set_w_array.length - 1)))
+                        {
+                            let btn_id = document.querySelector("#thicker");
+                            btn_id.classList.toggle("on_limit");
+                        }
+                        break;
+                    case "row":
+                        // Toggle sul pulsante "less"
+                        if (((direction == "-") && (this.store.cards_per_row == 1)) || ((direction == "+") && (this.store.cards_per_row == 2)))
+                        {
+                            let btn_id = document.querySelector("#less");
+                            btn_id.classList.toggle("on_limit"); 
+                        }
+                        // Toggle sul pulsante "more"
+                        else if (((direction == "-") && (this.store.cards_per_row == this.store.cards.length - 1)) || ((direction == "+") && (this.store.cards_per_row == this.store.cards.length)))
+                        {
+                            let btn_id = document.querySelector("#more");
+                            btn_id.classList.toggle("on_limit");
+                        }
+                        break;
+                }
+            },
+
             go_thinner() 
             { 
                 if (this.store.card_set_width != 0)
                 {
-                    (this.store.card_set_width--);
+                    this.store.card_set_width--;
+                    this.check_limit("width","-");
                 } 
             },
 
@@ -23,7 +84,8 @@
             { 
                 if (this.store.card_set_width != this.store.card_set_w_array.length - 1)
                 {
-                    (this.store.card_set_width++);
+                    this.store.card_set_width++;
+                    this.check_limit("width","+");
                 } 
             },
 
@@ -31,7 +93,8 @@
             {
                 if (this.store.cards_per_row > 1)
                 {
-                    (this.store.cards_per_row--);
+                    this.store.cards_per_row--;
+                    this.check_limit("row","-");
                 }
             },
 
@@ -39,7 +102,8 @@
             {
                 if (this.store.cards_per_row < this.store.cards.length)
                 {
-                    (this.store.cards_per_row++);
+                    this.store.cards_per_row++;
+                    this.check_limit("row","+");
                 }
             }
         }
@@ -49,14 +113,22 @@
 <template>
     <div id="nav_menu">
         <div id="width_menu" class="menu_area">
-            <button id="thinner" class="btn" type="button" v-on:click="go_thinner()"><i class="fa-solid fa-minimize"></i></button>
+            <button id="thinner" class="btn" type="button" v-on:click="go_thinner()">
+                <i class="fa-solid fa-minimize"></i>
+            </button>
             <span id="width_data">{{ Math.trunc(store.card_set_w_array[store.card_set_width] * 100)}}%</span>
-            <button id="thicker" class="btn" type="button" v-on:click="go_thicker()"><i class="fa-solid fa-maximize"></i></button>
+            <button id="thicker" class="btn" type="button" v-on:click="go_thicker()">
+                <i class="fa-solid fa-maximize"></i>
+            </button>
         </div>
         <div id="rows_menu" class="menu_area">
-            <button id="less" class="btn" type="button" v-on:click="go_less()"><i class="fa-solid fa-caret-down"></i></button>
+            <button id="less" class="btn" type="button" v-on:click="go_less()">
+                <i class="fa-solid fa-caret-down"></i>
+            </button>
             <span id="rows_data">{{ store.cards_per_row }}</span>
-            <button id="more" class="btn" type="button" v-on:click="go_more()"><i class="fa-solid fa-caret-up"></i></button>
+            <button id="more" class="btn" type="button" v-on:click="go_more()">
+                <i class="fa-solid fa-caret-up"></i>
+            </button>
         </div>
     </div>
 </template>
@@ -93,6 +165,16 @@
                 border-radius: 5px;
                 background-color: $btn_bg_color;
                 color: $btn_color;
+                &:hover
+                {
+                    border-color: blue !important;
+                    color: blue;
+                }
+            }
+            .btn.on_limit
+            {
+                border-color: $btn_onlimit_color !important;
+                color: $btn_onlimit_color;
             }
             span
             {

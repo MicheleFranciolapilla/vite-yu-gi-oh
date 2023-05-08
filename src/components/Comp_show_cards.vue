@@ -18,26 +18,15 @@
         },
         computed:
         {
-
-        //     change_box_width()
-        //     {
-        //         this.box_width   = `width : calc(100% * ${store.card_set_w_array[store.card_set_width]})`;
-        //         return this.box_width;
-        //     },
-
-        //     change_card_width()
-        //     {
-        //         this.card_width   = `flex-basis: calc((100% - (${store.card_gap * (store.cards_per_row - 1)}vw)) / ${store.cards_per_row})`;
-        //         return this.card_width;
-        //     }
-        // }
             change_box_width()
             {
+                console.log("chiamata a change box width");
                 return `width : calc(100% * ${store.card_set_w_array[store.card_set_width]})`;
             },
 
             change_card_width()
             {
+                console.log("chiamata a change card width");
                 return `flex-basis: calc((100% - (${store.card_gap * (store.cards_per_row - 1)}vw)) / ${store.cards_per_row})`;
             }
         }
