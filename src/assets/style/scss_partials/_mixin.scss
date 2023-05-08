@@ -1,11 +1,7 @@
 // Importazione del parziale "variabili"
 @import "./_variables.scss";
 
-// Funzione mixin di default
-@mixin default_mixin($default_param)
+@mixin calc_card_width($cards_in_row)
 {
-    @if $default_param == $default_var
-    {
-        display: block;
-    }
+    width: calc((100% - (($cards_in_row - 1) * $card_set_gap)) / $cards_in_row);
 }

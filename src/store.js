@@ -14,6 +14,7 @@ export const store = reactive(
         cards               : [],  
         // URL della API (base)
         API_URL_default     : "https://db.ygoprodeck.com/api/v7/cardinfo.php",
+        card_gap            : 0.8 
 
 
     })

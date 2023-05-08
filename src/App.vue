@@ -62,7 +62,7 @@
       } 
       main
       {
-        height: calc(100% - ($header_height + $nav_height + $footer_height));
+        max-height: calc(100% - ($header_height + $nav_height + $footer_height));
         padding: 3vh 0;
       } 
       footer

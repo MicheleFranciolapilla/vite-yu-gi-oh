@@ -11,7 +11,8 @@
         data()
         {
             return {
-                box_width : `width : calc(100% * ${store.card_set_width})`,
+                box_width   : `width : calc(100% * ${store.card_set_width})`,
+                card_width  : `flex-basis: calc((100% - (${store.card_gap * (store.cards_per_row - 1)}vw)) / ${store.cards_per_row})`,
                 store
             }
         }
@@ -26,7 +27,8 @@
         </div>
         <div id="card_set">
             <div class="card"
-            v-for="(item, index) in store.cards" :key="index">
+            v-for="(item, index) in store.cards" :key="index"
+            v-bind:style="card_width">
                 <Comp_single_card :single_card = "item"/>
             </div>
         </div>
@@ -41,7 +43,7 @@
     {
         background-color: $cards_back_color;
         height: 100%;
-        padding: $cards_back_border;
+        padding: calc($card_set_gap * 2);
         #card_set_header
         {
             height: $card_set_header_h;
@@ -58,6 +60,7 @@
         {
             display: flex;
             flex-wrap: wrap;
+            gap: $card_set_gap;
             height: calc(100% - $card_set_header_h);
         } 
     }
