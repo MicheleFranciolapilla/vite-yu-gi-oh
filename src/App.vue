@@ -50,32 +50,43 @@
       // Metodo incaricato delle richieste alla API
       async get_cards(code, search_data)
       {
+        // Controlliamo i dati nella console
+        console.log("code= ",code);
+        console.log("search_data= ",search_data);
         // Caso in cui non si deve fare nulla: code != 0 (trattasi di input) e search_data = ""
         if (!((code != this.store.API_init) && (search_data == "")))
         // Per tutti gli altri casi si entra nell'if e si eseguono funzioni e controlli
         {
-          // Intanto si prepara l'url opportuno
-          this.set_api_url(code, search_data);
-          // Controlliamo i dati nella console
-          console.log("code= ",code);
-          console.log("search_data= ",search_data);
-        }
-        switch (code)
-        {
-          case this.store.API_init:
-            this.on_loading = true;
-
-            await axios.get(this.API_URL_actual).then( 
-              res => 
+          switch (code)
+          {
+            // Caso in cui si sta solo inizializzando il programma (Prima chiamata alla API)
+            case this.store.API_init:
+              this.set_api_url(code, search_data);
+              this.on_loading = true;
+              await axios.get(this.API_URL_actual).then( 
+                res => 
+                {
+                  this.store.cards = res.data.data;
+                  console.log("store ",store.cards);
+                  this.on_loading = false;
+                });
+              break;
+            // Caso in cui si è appena digitato o selezionato l'archetipo da cercare
+            case this.store.API_search_archetype:
+              // Caso in cui l'archetipo da cercare esiste
+              if (this.store.archetypes.includes(search_data))
               {
-                this.store.cards = res.data.data;
-                console.log("store ",store.cards);
-                this.on_loading = false;
-              });
-            break;
-          case this.store.API_search_archetype:
-            break;
+
+              }
+              // Caso in cui l'input dell'archetipo è errato .... si genererà un errore e non ci sarà nessuna chiamata alla API
+              else
+              {
+
+              }
+              break;
         }
+        }
+
       },
 
       async populate_archetypes() 
