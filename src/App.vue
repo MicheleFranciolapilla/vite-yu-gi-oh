@@ -18,7 +18,7 @@
         // URL della API (effettivo)
         API_URL_actual  : "",
         // Array contenente le chiavi della query string
-        URL_keys        : ["num=","offset="],
+        URL_keys        : ["num=","offset=","archetype="],
         on_loading      : false, 
         store
       }
@@ -43,8 +43,12 @@
             // Se "code = 0" formattiamo l'url con "numero di cards da richiedere" e "card di partenza"
             query_string = query_string.concat(this.URL_keys[0],store.cards_to_get.toString(),"&",this.URL_keys[1],store.cards_base.toString());
             break;
+          case this.store.API_search_archetype:
+            // Se "code = 1" formattiamo l'url con "archetipo da ricercare"
+            query_string = query_string.concat(this.URL_keys[2], search_data);
         }
         this.API_URL_actual = store.API_URL_default.concat("?", query_string);
+        console.log("url attuale: ",this.API_URL_actual);
       },
 
       // Metodo incaricato delle richieste alla API
@@ -67,16 +71,28 @@
                 res => 
                 {
                   this.store.cards = res.data.data;
-                  console.log("store ",store.cards);
+                  console.log("array delle cards ",store.cards);
                   this.on_loading = false;
                 });
               break;
             // Caso in cui si è appena digitato o selezionato l'archetipo da cercare
             case this.store.API_search_archetype:
-              // Caso in cui l'archetipo da cercare esiste
+              // Caso in cui l'archetipo da cercare esiste..... si comporrà il giusto url e si effettuerà la chiamata alla API
               if (this.store.archetypes.includes(search_data))
               {
-
+                // Si svuota l'array delle cards
+                this.store.cards = [];
+                // e si procede con composizione url e chiamata alla API
+                this.set_api_url(code, search_data);
+                this.on_loading = true;
+                await axios.get(this.API_URL_actual).then( 
+                  res => 
+                  {
+                    this.store.cards = res.data.data;
+                    console.log("array delle cards ",store.cards);
+                    this.on_loading = false;
+                  });
+                this.store.the_archetype = "";
               }
               // Caso in cui l'input dell'archetipo è errato .... si genererà un errore e non ci sarà nessuna chiamata alla API
               else

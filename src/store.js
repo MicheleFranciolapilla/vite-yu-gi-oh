@@ -26,6 +26,4 @@ export const store = reactive(
         API_URL_archetypes      : "https://db.ygoprodeck.com/api/v7/archetypes.php",
         // Variabile che conterrà il dato selezionato in input (archetipo)
         the_archetype           : ""    
-
-
     })
