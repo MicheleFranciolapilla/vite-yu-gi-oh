@@ -2,6 +2,8 @@
 import { reactive } from "vue";
 export const store = reactive(
     {
+        total_cards_nr          : 0,
+        general_cards           : true,  
         // Costanti semantiche utilizzate nell'invocazione del chiamante l'API
         API_init                : 0,
         API_search_archetype    : 1,

@@ -30,7 +30,6 @@
                 return `flex-basis: calc((100% - (${store.card_gap * (store.cards_per_row - 1)}vw)) / ${store.cards_per_row})`;
             }
         }
-
     }
 </script>
 
@@ -38,7 +37,11 @@
     <div id="show_cards" class="mx-auto"
         v-bind:style="change_box_width">
         <div id="card_set_header">
-            <span>Cards trovate: {{ store.cards.length }} cards</span>
+            <span>Cards visualizzate: 
+                <span>{{Math.min(store.cards.length, store.cards_to_get)}}</span> 
+                su
+                <span>{{(store.general_cards) ? (store.total_cards_nr) : (store.cards.length)}}</span> 
+            cards totali</span>
         </div>
         <div id="card_set">
             <div v-for="(item, index) in store.cards" :key="index" v-bind:style="change_card_width">
@@ -70,6 +73,11 @@
             {
                 color: $card_set_header_t;
                 padding: 0 10px;
+                span
+                {
+                    color: $card_set_header_d;
+                    font-weight: 800;
+                } 
             } 
         }
         #card_set

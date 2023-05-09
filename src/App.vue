@@ -23,15 +23,36 @@
         store
       }
     },
+
+    created()
+    {
+      this.get_total_cards_number()
+    },
+
     mounted()
     {
       // Prima invocazione del metodo per chiamate alla API con configurazione di default (numero cards e card di partenza)
-      this.get_cards(this.store.API_init,"");
+      // this.get_cards(this.store.API_init,"");
       // Invocazione del metodo per il popolamento dell'array con la lista degli archetipi disponibili. L'ordine di invocazione dei due metodi è tale da evitare eventuali problemi di richieste eccessive alla API (limite: 20 richieste al secondo)
-      this.populate_archetypes();
+      // this.populate_archetypes();
     },
     methods:
     {
+      async get_total_cards_number()
+      {
+        this.on_loading = true;
+        await axios.get(this.store.API_URL_default).then( 
+          res => 
+          {
+            this.store.cards = res.data.data;
+            this.on_loading = false;
+            this.store.total_cards_nr = this.store.cards.length;
+            this.store.cards = [];
+            this.get_cards(this.store.API_init,"");
+            this.populate_archetypes();
+          });
+      },
+
       // Metodo che si occuperà della corretta formattazione della stringa "url" in base alle esigenze. Il parametro "code" indica il tipo di formattazione da eseguire
       set_api_url(code, search_data)
       {
@@ -91,8 +112,8 @@
                     this.store.cards = res.data.data;
                     console.log("array delle cards ",store.cards);
                     this.on_loading = false;
+                    this.store.general_cards = false;
                   });
-                this.store.the_archetype = "";
               }
               // Caso in cui l'input dell'archetipo è errato .... si genererà un errore e non ci sarà nessuna chiamata alla API
               else
