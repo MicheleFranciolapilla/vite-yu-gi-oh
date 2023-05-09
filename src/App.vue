@@ -26,7 +26,7 @@
     mounted()
     {
       // Prima invocazione del metodo per chiamate alla API con configurazione di default (numero cards e card di partenza)
-      this.get_cards(0,"");
+      this.get_cards(this.store.API_init,"");
       // Invocazione del metodo per il popolamento dell'array con la lista degli archetipi disponibili. L'ordine di invocazione dei due metodi è tale da evitare eventuali problemi di richieste eccessive alla API (limite: 20 richieste al secondo)
       this.populate_archetypes();
     },
@@ -39,7 +39,7 @@
         // All'interno del blocco "switch" viene formattata la query string
         switch (code)
         {
-          case 0:
+          case this.store.API_init:
             // Se "code = 0" formattiamo l'url con "numero di cards da richiedere" e "card di partenza"
             query_string = query_string.concat(this.URL_keys[0],store.cards_to_get.toString(),"&",this.URL_keys[1],store.cards_base.toString());
             break;
@@ -50,19 +50,31 @@
       // Metodo incaricato delle richieste alla API
       async get_cards(code, search_data)
       {
-        if (code == 0)
+        // Caso in cui non si deve fare nulla: code != 0 (trattasi di input) e search_data = ""
+        if (!((code != this.store.API_init) && (search_data == "")))
+        // Per tutti gli altri casi si entra nell'if e si eseguono funzioni e controlli
         {
+          // Intanto si prepara l'url opportuno
           this.set_api_url(code, search_data);
-          this.on_loading = true;
+          // Controlliamo i dati nella console
           console.log("code= ",code);
           console.log("search_data= ",search_data);
-          await axios.get(this.API_URL_actual).then( 
-            res => 
-            {
-              this.store.cards = res.data.data;
-              console.log("store ",store.cards);
-              this.on_loading = false;
-            });
+        }
+        switch (code)
+        {
+          case this.store.API_init:
+            this.on_loading = true;
+
+            await axios.get(this.API_URL_actual).then( 
+              res => 
+              {
+                this.store.cards = res.data.data;
+                console.log("store ",store.cards);
+                this.on_loading = false;
+              });
+            break;
+          case this.store.API_search_archetype:
+            break;
         }
       },
 
@@ -75,7 +87,7 @@
             res.data.forEach(
               element => 
               {
-                this.store.archetypes.push({"name":element.archetype_name, "visible":true});
+                this.store.archetypes.push(element.archetype_name);
               });
             console.log("Archetipi in store: ",store.archetypes);
             this.on_loading = false;
@@ -98,7 +110,7 @@
       <h1>Yu-Gi-Oh Api</h1>
     </header>
     <nav>
-      <Comp_nav_menu @search_archetype = "get_cards" />
+      <Comp_nav_menu @go_to_api = "get_cards" />
     </nav>
     <main>
       <Comp_show_cards/>

@@ -7,7 +7,7 @@
         {
             return {
                 store,
-                archetype_data : ""
+                archetype_data : store.the_archetype
             }
         },
         methods:
@@ -94,9 +94,9 @@
                 <!-- elemento "datalist": non supportato o parzialmente supportato sui browser "Opera Mini", "KaiOS" e "IE"-->
                 <!-- datalist consente di avere un input di tipo select combinato ad un input text classico -->
             <datalist v-if="store.archetypes.length != 0" id="archetype_list">
-                <option v-for="(archetype_data, index) in store.archetypes" :key="index + 100">{{ archetype_data.name }}</option>
+                <option v-for="(archetype_data, index) in store.archetypes" :key="index + 100">{{ archetype_data }}</option>
             </datalist>
-            <button id="input_btn" class="btn btn-primary" type="submit" @click.prevent="$emit('search_archetype', 1, archetype_data)">Conferma</button>
+            <button id="input_btn" class="btn btn-primary" type="submit" @click.prevent="$emit('go_to_api', store.API_search_archetype, archetype_data)">Conferma</button>
         </form>
         <div id="width_menu" class="menu_area col-1 offset-5">
             <button id="thinner" class="btn" type="button" v-on:click="go_thinner()">
