@@ -62,6 +62,7 @@
         {
             height: $card_set_header_h;
             background-color: $card_set_header_c;
+            border-radius: 5px;
             display: flex;
             align-items: center;
             margin-bottom: 3px;

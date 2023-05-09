@@ -12,8 +12,8 @@
             <img v-bind:src="single_card.card_images[0].image_url" alt="...">
         </div>
         <div class="card_info">
-            <h6>{{ single_card.name }}</h6>
-            <span>{{ single_card.archetype }}</span>
+            <h6>{{single_card.name}}</h6>
+            <span>{{single_card.archetype}}</span>
         </div>
     </div>
 </template>

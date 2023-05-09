@@ -1,6 +1,6 @@
 <script>
 // Importazione dello store (state management)
-  import Comp_get_cards from "./components/Comp_get_cards.vue";
+  import axios from "axios";
   import Comp_nav_menu from "./components/Comp_nav_menu.vue";
   import Comp_show_cards from "./components/Comp_show_cards.vue";
   import { store } from "./store"
@@ -9,9 +9,52 @@
     name        : "App",
     components  : 
     {
-      Comp_get_cards,
       Comp_nav_menu,
       Comp_show_cards
+    },
+    data()
+    {
+      return {
+        // URL della API (effettivo)
+        API_URL_actual  : "",
+        // Array contenente le chiavi della query string
+        URL_keys        : ["num=","offset="],
+        store
+      }
+    },
+    created()
+    {
+      // Prima invocazione del metodo per chiamate alla API con configurazione di default (numero cards e card di partenza)
+      this.get_cards(0);
+    },
+    methods:
+    {
+      // Metodo che si occuperà della corretta formattazione della stringa "url" in base alle esigenze. Il parametro "code" indica il tipo di formattazione da eseguire
+      set_api_url(code)
+      {
+        let query_string = "";
+        // All'interno del blocco "switch" viene formattata la query string
+        switch (code)
+        {
+          case 0:
+            // Se "code = 0" formattiamo l'url con "numero di cards da richiedere" e "card di partenza"
+            query_string = query_string.concat(this.URL_keys[0],store.cards_to_get.toString(),"&",this.URL_keys[1],store.cards_base.toString());
+            break;
+        }
+        this.API_URL_actual = store.API_URL_default.concat("?", query_string);
+      },
+
+      // Metodo incaricato delle richieste alla API
+      async get_cards(code)
+      {
+        this.set_api_url(code);
+        await axios.get(this.API_URL_actual).then( 
+          res => 
+          {
+            this.store.cards = res.data.data;
+            console.log("store ",store.cards);
+          });
+      }
     }
   }
 </script>
@@ -26,11 +69,9 @@
       <Comp_nav_menu/>
     </nav>
     <main>
-      <Comp_get_cards/>
       <Comp_show_cards/>
     </main>
     <footer class="fixed-bottom">
-
     </footer>
   </div>
 </template>
