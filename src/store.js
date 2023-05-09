@@ -10,9 +10,9 @@ export const store = reactive(
         // Numero di cards per riga
         cards_per_row       : 5,
         // Indice della card da cui partire per la richiesta all'API
-        cards_base          : 777, 
+        cards_base          : 0, 
         // Numero di cards da richiedere all'API
-        cards_to_get        : 10, 
+        cards_to_get        : 20, 
         // Array con le cards ricevute dalla API
         cards               : [],  
         // Array con tutti gli archetipi
@@ -20,7 +20,9 @@ export const store = reactive(
         // URL della API (base)
         API_URL_default     : "https://db.ygoprodeck.com/api/v7/cardinfo.php",
         // URL per ottenimento degli archetipi
-        API_URL_archetypes  : "https://db.ygoprodeck.com/api/v7/archetypes.php" 
+        API_URL_archetypes  : "https://db.ygoprodeck.com/api/v7/archetypes.php",
+        // Variabile che conterrà il dato selezionato in input (archetipo)
+        the_archetype       : ""    
 
 
     })

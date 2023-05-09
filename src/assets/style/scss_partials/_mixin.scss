@@ -1,7 +1,2 @@
 // Importazione del parziale "variabili"
 @import "./_variables.scss";
-
-@mixin calc_card_width($cards_in_row)
-{
-    width: calc((100% - (($cards_in_row - 1) * $card_set_gap)) / $cards_in_row);
-}

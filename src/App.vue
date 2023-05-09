@@ -58,12 +58,15 @@
           });
       },
 
-      populate_archetypes() 
+      async populate_archetypes() 
       {
-        axios.get(this.store.API_URL_archetypes).then(
+        await axios.get(this.store.API_URL_archetypes).then(
           res =>
           {
-            this.store.archetypes = res.data;
+            for (let i = 0; i < res.data.length; i++)
+            {
+              this.store.archetypes.push({"name":res.data[i].archetype_name, "visible":true});
+            }
             console.log("Archetipi in store: ",store.archetypes);
           });
       }     

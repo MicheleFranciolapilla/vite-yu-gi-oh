@@ -11,31 +11,6 @@
         },
         methods:
         {
-            chek_limit(limit)
-            {
-                let limit_bool = false;
-                switch (limit)
-                {
-                    case 0:
-                        if (this.store.card_set_width = 0)
-                        limit_bool = true;
-                        break;
-                    case 1:
-                        if (this.store.card_set_width = this.store.card_set_w_array.length - 1)
-                        limit_bool = true;
-                        break;
-                    case 2:
-                        if (this.store.cards_per_row = 1)
-                        limit_bool = true;
-                        break;
-                    case 3:
-                        if (this.store.cards_per_row = this.store.cards.length)
-                        limit_bool = true;
-                        break;
-                }
-                return limit_bool;
-            },
-
             check_limit(btn,direction)
             {
                 switch (btn)
@@ -112,6 +87,16 @@
 
 <template>
     <div id="nav_menu">
+        <div id="input_area" class="menu_area">
+            <input type="text" name="archetype_input" v-model="store.the_archetype">
+                <!-- elemento "datalist": non supportato o parzialmente supportato sui browser "Opera Mini", "KaiOS" e "IE"-->
+                <!-- datalist consente di avere un input di tipo select combinato ad un input text classico -->
+                <!-- <datalist v-if="store.archetypes.length != 0" id="archetype">
+                    <option v-for="(item, index) in store.archetypes"
+                            :key="index+100"
+                            value=item></option>
+                </datalist> -->
+        </div>
         <div id="width_menu" class="menu_area">
             <button id="thinner" class="btn" type="button" v-on:click="go_thinner()">
                 <i class="fa-solid fa-minimize"></i>
