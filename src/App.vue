@@ -26,6 +26,8 @@
     {
       // Prima invocazione del metodo per chiamate alla API con configurazione di default (numero cards e card di partenza)
       this.get_cards(0);
+      // Invocazione del metodo per il popolamento dell'array con la lista degli archetipi disponibili. L'ordine di invocazione dei due metodi è tale da evitare eventuali problemi di richieste eccessive alla API (limite: 20 richieste al secondo)
+      this.populate_archetypes();
     },
     methods:
     {
@@ -54,7 +56,17 @@
             this.store.cards = res.data.data;
             console.log("store ",store.cards);
           });
-      }
+      },
+
+      populate_archetypes() 
+      {
+        axios.get(this.store.API_URL_archetypes).then(
+          res =>
+          {
+            this.store.archetypes = res.data;
+            console.log("Archetipi in store: ",store.archetypes);
+          });
+      }     
     }
   }
 </script>

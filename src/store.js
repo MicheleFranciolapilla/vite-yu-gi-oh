@@ -2,6 +2,7 @@
 import { reactive } from "vue";
 export const store = reactive(
     {
+        // Gap tra le cards (ha un corrispettivo in _variables.scss)
         card_gap            : 0.8,
         // Larghezza della finestra di visualizzazione delle cards
         card_set_width      : 5,
@@ -14,8 +15,12 @@ export const store = reactive(
         cards_to_get        : 10, 
         // Array con le cards ricevute dalla API
         cards               : [],  
+        // Array con tutti gli archetipi
+        archetypes          : [], 
         // URL della API (base)
-        API_URL_default     : "https://db.ygoprodeck.com/api/v7/cardinfo.php"
+        API_URL_default     : "https://db.ygoprodeck.com/api/v7/cardinfo.php",
+        // URL per ottenimento degli archetipi
+        API_URL_archetypes  : "https://db.ygoprodeck.com/api/v7/archetypes.php" 
 
 
     })
