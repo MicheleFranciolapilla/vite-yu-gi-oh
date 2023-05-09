@@ -26,14 +26,14 @@
     mounted()
     {
       // Prima invocazione del metodo per chiamate alla API con configurazione di default (numero cards e card di partenza)
-      this.get_cards(0);
+      this.get_cards(0,"");
       // Invocazione del metodo per il popolamento dell'array con la lista degli archetipi disponibili. L'ordine di invocazione dei due metodi è tale da evitare eventuali problemi di richieste eccessive alla API (limite: 20 richieste al secondo)
       this.populate_archetypes();
     },
     methods:
     {
       // Metodo che si occuperà della corretta formattazione della stringa "url" in base alle esigenze. Il parametro "code" indica il tipo di formattazione da eseguire
-      set_api_url(code)
+      set_api_url(code, search_data)
       {
         let query_string = "";
         // All'interno del blocco "switch" viene formattata la query string
@@ -48,17 +48,22 @@
       },
 
       // Metodo incaricato delle richieste alla API
-      async get_cards(code)
+      async get_cards(code, search_data)
       {
-        this.set_api_url(code);
-        this.on_loading = true;
-        await axios.get(this.API_URL_actual).then( 
-          res => 
-          {
-            this.store.cards = res.data.data;
-            console.log("store ",store.cards);
-            this.on_loading = false;
-          });
+        if (code == 0)
+        {
+          this.set_api_url(code, search_data);
+          this.on_loading = true;
+          console.log("code= ",code);
+          console.log("search_data= ",search_data);
+          await axios.get(this.API_URL_actual).then( 
+            res => 
+            {
+              this.store.cards = res.data.data;
+              console.log("store ",store.cards);
+              this.on_loading = false;
+            });
+        }
       },
 
       async populate_archetypes() 
@@ -93,7 +98,7 @@
       <h1>Yu-Gi-Oh Api</h1>
     </header>
     <nav>
-      <Comp_nav_menu/>
+      <Comp_nav_menu @search_archetype = "get_cards" />
     </nav>
     <main>
       <Comp_show_cards/>

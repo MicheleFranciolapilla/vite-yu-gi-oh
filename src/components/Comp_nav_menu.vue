@@ -87,16 +87,18 @@
 </script>
 
 <template>
-    <div id="nav_menu">
-        <div id="input_area" class="menu_area">
-            <input type="text" name="archetype_input" list="archetype_list" v-model="archetype_data">
+    <div id="nav_menu" class="row">
+        <form id="input_area" class="menu_area col-3 offset-1">
+            <span id="input_label">Archetipo...</span>
+            <input type="text" name="archetype_input" list="archetype_list" v-model="archetype_data" placeholder="ricerca archetipo">
                 <!-- elemento "datalist": non supportato o parzialmente supportato sui browser "Opera Mini", "KaiOS" e "IE"-->
                 <!-- datalist consente di avere un input di tipo select combinato ad un input text classico -->
-                <datalist v-if="store.archetypes.length != 0" id="archetype_list">
-                    <option v-for="(archetype_data, index) in store.archetypes" :key="index + 100">{{ archetype_data.name }}</option>
-                </datalist>
-        </div>
-        <div id="width_menu" class="menu_area">
+            <datalist v-if="store.archetypes.length != 0" id="archetype_list">
+                <option v-for="(archetype_data, index) in store.archetypes" :key="index + 100">{{ archetype_data.name }}</option>
+            </datalist>
+            <button id="input_btn" class="btn btn-primary" type="submit" @click.prevent="$emit('search_archetype', 1, archetype_data)">Conferma</button>
+        </form>
+        <div id="width_menu" class="menu_area col-1 offset-5">
             <button id="thinner" class="btn" type="button" v-on:click="go_thinner()">
                 <i class="fa-solid fa-minimize"></i>
             </button>
@@ -105,7 +107,7 @@
                 <i class="fa-solid fa-maximize"></i>
             </button>
         </div>
-        <div id="rows_menu" class="menu_area">
+        <div id="rows_menu" class="menu_area col-1">
             <button id="less" class="btn" type="button" v-on:click="go_less()">
                 <i class="fa-solid fa-caret-down"></i>
             </button>
@@ -123,8 +125,8 @@
 
     #nav_menu
     {
-        display: flex;
-        justify-content: center;
+        // display: flex;
+        // justify-content: center;
         align-items: center;
         height: 100%;
         gap: 50px;
@@ -138,7 +140,7 @@
             padding: 5px;
             border: 3px solid $nav_menu_border;
             border-radius: 5px;
-            .btn
+            .btn:not(#input_btn)
             {
                 width: 15px;
                 height: 50%;
@@ -160,7 +162,7 @@
                 border-color: $btn_onlimit_color !important;
                 color: $btn_onlimit_color;
             }
-            span
+            span:not(#input_label)
             {
                 padding: 0 5px;
                 text-align: center;
