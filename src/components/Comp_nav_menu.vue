@@ -6,7 +6,8 @@
         data()
         {
             return {
-                store
+                store,
+                archetype_data : ""
             }
         },
         methods:
@@ -88,14 +89,12 @@
 <template>
     <div id="nav_menu">
         <div id="input_area" class="menu_area">
-            <input type="text" name="archetype_input" v-model="store.the_archetype">
+            <input type="text" name="archetype_input" list="archetype_list" v-model="archetype_data">
                 <!-- elemento "datalist": non supportato o parzialmente supportato sui browser "Opera Mini", "KaiOS" e "IE"-->
                 <!-- datalist consente di avere un input di tipo select combinato ad un input text classico -->
-                <!-- <datalist v-if="store.archetypes.length != 0" id="archetype">
-                    <option v-for="(item, index) in store.archetypes"
-                            :key="index+100"
-                            value=item></option>
-                </datalist> -->
+                <datalist v-if="store.archetypes.length != 0" id="archetype_list">
+                    <option v-for="(archetype_data, index) in store.archetypes" :key="index + 100">{{ archetype_data.name }}</option>
+                </datalist>
         </div>
         <div id="width_menu" class="menu_area">
             <button id="thinner" class="btn" type="button" v-on:click="go_thinner()">

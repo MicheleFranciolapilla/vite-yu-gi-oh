@@ -19,10 +19,11 @@
         API_URL_actual  : "",
         // Array contenente le chiavi della query string
         URL_keys        : ["num=","offset="],
+        on_loading      : false, 
         store
       }
     },
-    created()
+    mounted()
     {
       // Prima invocazione del metodo per chiamate alla API con configurazione di default (numero cards e card di partenza)
       this.get_cards(0);
@@ -50,16 +51,19 @@
       async get_cards(code)
       {
         this.set_api_url(code);
+        this.on_loading = true;
         await axios.get(this.API_URL_actual).then( 
           res => 
           {
             this.store.cards = res.data.data;
             console.log("store ",store.cards);
+            this.on_loading = false;
           });
       },
 
       async populate_archetypes() 
       {
+        this.on_loading = true;
         await axios.get(this.store.API_URL_archetypes).then(
           res =>
           {
@@ -69,6 +73,7 @@
                 this.store.archetypes.push({"name":element.archetype_name, "visible":true});
               });
             console.log("Archetipi in store: ",store.archetypes);
+            this.on_loading = false;
           });
       }     
     }
@@ -77,6 +82,12 @@
 
 <template>
   <div id="app_base" class="vh-100 position-relative">
+    <div id="while_loading" class="position-absolute top-0 start-0 bottom-0 end-0" v-if="on_loading">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Caricamento in corso...</span>
+      </div>
+      <h3 class="my-4">Caricamento in corso...</h3>
+    </div>
     <header>
       <img id="logo" src="https://png.pngitem.com/pimgs/s/172-1722643_yugioh-logo-png-yu-gi-oh-logo-transparent.png" alt="logo">
       <h1>Yu-Gi-Oh Api</h1>
@@ -99,6 +110,19 @@
     #app_base
     {
       background-color: $background_color;
+      #while_loading
+      {
+        background-color: rgba($color: #000000, $alpha: 0.5);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .spinner-border
+        {
+          width: 3rem;
+          height: 3rem;
+        }
+      }
       header
       {
         height: $header_height;
